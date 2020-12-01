@@ -1,7 +1,7 @@
 import sys
 
 
-def calculate_expense_report_solution(year: int, expenses: list) -> int:
+def calculate_expense_report_solution_task1(year: int, expenses: list) -> int:
     delta = []
     for i in range(len(expenses)):
         if expenses[i] in delta:
@@ -24,7 +24,7 @@ def read_input_file(file_name: str):
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         input_expenses = read_input_file(sys.argv[1])
-        result = calculate_expense_report_solution(2020, input_expenses)
-        print("Result: {:d}".format(result))
+        result = calculate_expense_report_solution_task1(2020, input_expenses)
+        print("Result for Task 1: {:d}".format(result))
     else:
         print("Usage: {:s} expenses file".format(sys.argv[0]))
