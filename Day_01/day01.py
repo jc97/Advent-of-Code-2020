@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+"""Advent of Code 2020 - Day 01 - Solution by Julian Knorr (git@jknorr.eu)"""
 import sys
 
 
