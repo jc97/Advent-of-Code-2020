@@ -16,7 +16,7 @@ def calculate_expense_report_solution_task1(year: int, expenses: list) -> int:
 def calculate_expense_report_solution_task2(year: int, expenses: list) -> int:
     delta1 = []
     delta2 = []
-    for i in range(0,len(expenses)):
+    for i in range(0, len(expenses)):
         delta2.append([])
 
     for i in range(len(expenses)):
