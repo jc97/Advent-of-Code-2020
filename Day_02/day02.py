@@ -37,6 +37,24 @@ def validate_task1(policy: list, password: str):
     return False
 
 
+def validate_task2(policy: list, password: str):
+    position1 = int(policy[0])
+    position2 = int(policy[1])
+    character = policy[2]
+    if position1 == position2:
+        raise ValueError("The policy position must not be equal.")
+    count = 0
+    if position1 <= len(password):
+        if password[position1 - 1] == character:
+            count += 1
+    if position2 <= len(password):
+        if password[position2 - 1] == character:
+            count += 1
+    if count == 1:
+        return True
+    return False
+
+
 def evaluate_line(line: str, regex: re.Pattern) -> Tuple[bool, Optional[list], Optional[str]]:
     m = regex.fullmatch(line.strip())
     policy = []
@@ -57,9 +75,14 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         input_file = sys.argv[1]
         puzzle_lines = read_puzzle_file(input_file)
-        valid, invalid, invalid_entries = solve_puzzle(puzzle_lines, validate_task1)
-        print("Valid Passwords: {:d}".format(valid))
-        print("Invalid Passwords: {:d}".format(invalid))
+        valid1, invalid1, invalid_entries = solve_puzzle(puzzle_lines, validate_task1)
         print("Invalid Lines: {:d}".format(invalid_entries))
+        valid2, invalid2, invalid_entries = solve_puzzle(puzzle_lines, validate_task2)
+        print("")
+        print("Task 1: Valid Passwords: {:d}".format(valid1))
+        print("Task 1: Invalid Passwords: {:d}".format(invalid1))
+        print("")
+        print("Task 2: Valid Passwords: {:d}".format(valid2))
+        print("Task 2: Invalid Passwords: {:d}".format(invalid2))
     else:
         print("Usage: {:s} puzzle file".format(sys.argv[0]))
