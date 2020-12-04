@@ -25,16 +25,28 @@ def clean_and_check_puzzle(puzzle_input: List[str]) -> Optional[List[str]]:
     return puzzle_output
 
 
-def task01(input_puzzle: List[str]) -> int:
+def test_slope(input_puzzle: List[str], slope_width_x: int, slope_width_y: int) -> int:
     x, y = 0, 0
     rows = len(input_puzzle)
     trees = 0
     while y < rows - 1:
-        y += 1
-        x = (x + 3) % len(input_puzzle[y])
+        y += slope_width_y
+        x = (x + slope_width_x) % len(input_puzzle[y])
         if input_puzzle[y][x] == TREE:
             trees += 1
     return trees
+
+
+def task01(input_puzzle: List[str]) -> int:
+    return test_slope(input_puzzle, 3, 1)
+
+
+def task02(input_puzzle: List[str]) -> int:
+    result = 1
+    slopes = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
+    for slope in slopes:
+        result *= test_slope(input_puzzle, slope[0], slope[1])
+    return result
 
 
 if __name__ == '__main__':
@@ -44,5 +56,7 @@ if __name__ == '__main__':
         puzzle = clean_and_check_puzzle(puzzle_lines)
         task1_solution = task01(puzzle)
         print("Task 1: Trees: {:d}".format(task1_solution))
+        task2_solution = task02(puzzle)
+        print("Task 2: Trees: {:d}".format(task2_solution))
     else:
         print("Usage: {:s} puzzle file".format(sys.argv[0]))
