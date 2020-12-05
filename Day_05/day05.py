@@ -2,7 +2,7 @@
 """Advent of Code 2020 - Day 04 - Solution by Julian Knorr (git@jknorr.eu)"""
 import re
 import sys
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 
 SEAT_REGEX = r"^[BF]{7}[LR]{3}$"
@@ -53,6 +53,36 @@ def highest_seat_id(puzzle: List[str]) -> int:
     return maximum
 
 
+def seat_plan(puzzle: List[str]) -> List[List[bool]]:
+    empty_row = [False] * 8
+    seats = [empty_row] * 128
+    for seat in puzzle:
+        r, c = parse_seat(seat.strip())
+        seats[r][c] = True
+    return seats
+
+
+def find_missing_seat(puzzle: List[str]) -> Tuple[Optional[int], Optional[int]]:
+    plan = seat_plan(puzzle)
+    for r in range(len(plan)):
+        for c in range(len(plan[r])):
+            if plan[r][c] is False and r+2 < len(plan):
+                if plan[r+2][c] is False:
+                    return (r + 1), c
+    return None, None
+
+
+def task2(puzzle: List[str]) -> int:
+    ids = []
+    for seat in puzzle:
+        ids.append(seat_id(*(parse_seat(seat.strip()))))
+    ids.sort()
+    for s in ids:
+        if not (s + 1) in ids and (s + 2) in ids:
+            return s + 1
+    raise RuntimeError("Task 2 not solvable.")
+
+
 def read_puzzle_file(filename: str) -> List[str]:
     file = open(filename, 'r')
     lines = file.readlines()
@@ -65,5 +95,7 @@ if __name__ == '__main__':
         puzzle_lines = read_puzzle_file(input_file)
         task1_solution = highest_seat_id(puzzle_lines)
         print("Task 1: Highest Seat Id: {:d}".format(task1_solution))
+        task2_solution = task2(puzzle_lines)
+        print("Task 2: Santa's Seat Id: {:d}".format(task2_solution))
     else:
         print("Usage: {:s} puzzle file".format(sys.argv[0]))
