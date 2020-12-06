@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 """Advent of Code 2020 - Day 06 - Solution by Julian Knorr (git@jknorr.eu)"""
-import string
 import sys
 from typing import Callable, List, Set
 
@@ -20,7 +19,8 @@ def groups_from_puzzle(puzzle: str) -> Puzzle:
     for g in groups_text:
         group = []
         for person in g.split("\n"):
-            group.append(set(person.strip()))
+            if len(person) > 0:
+                group.append(set(person.strip()))
         groups.append(group)
     return groups
 
