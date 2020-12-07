@@ -4,9 +4,6 @@ import sys
 from typing import Dict, List, Optional, Set, Tuple
 
 
-RULE_REGEX = r"^([a-z]+ [a-z]+) bags contain (?:(no other bags)|(?:(\d+) ([a-z]+ [a-z]+) bags?(?:, (\d+) ([a-z]+ [a-z]+) bags?)*))\.$"
-
-
 def read_puzzle_file(filename: str) -> List[str]:
     file = open(filename, 'r')
     lines = file.readlines()
