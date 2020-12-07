@@ -56,6 +56,16 @@ def get_sub_bags(graph: Dict, start: str, recursive: bool, visited: Optional[Set
     return result, None
 
 
+def count_all_sub_bags(graph: Dict, start: str) -> int:
+    result = 0
+    if start not in graph.keys():
+        return 0
+    for edge in graph[start]:
+        weight = edge[0]
+        result += weight * (count_all_sub_bags(graph, edge[1]) + 1)
+    return result
+
+
 def task1(puzzle: List[str]) -> int:
     lookup = "shiny gold"
     graph = build_graph(puzzle)
@@ -67,11 +77,19 @@ def task1(puzzle: List[str]) -> int:
     return result
 
 
+def task2(puzzle: List[str]) -> int:
+    lookup = "shiny gold"
+    graph = build_graph(puzzle)
+    return count_all_sub_bags(graph, lookup)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         input_file = sys.argv[1]
         puzzle_lines = read_puzzle_file(input_file)
         task1_solution = task1(puzzle_lines)
         print("Task 1: {:d}".format(task1_solution))
+        task2_solution = task2(puzzle_lines)
+        print("Task 2: {:d}".format(task2_solution))
     else:
         print("Usage: {:s} puzzle file".format(sys.argv[0]))
