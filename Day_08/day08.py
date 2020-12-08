@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Advent of Code 2020 - Day 07 - Solution by Julian Knorr (git@jknorr.eu)"""
+"""Advent of Code 2020 - Day 08 - Solution by Julian Knorr (git@jknorr.eu)"""
 import re
 import sys
 from typing import List, Tuple
