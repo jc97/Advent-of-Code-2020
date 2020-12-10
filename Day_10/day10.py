@@ -30,6 +30,34 @@ def task1(puzzle: List[int]) -> int:
     return joltage_differences_count[1] * joltage_differences_count[3]
 
 
+def count_possible_arrangements(puzzle: List[int], input_joltage: int) -> int:
+    print(str(input_joltage))
+    possibilities = 0
+    if len(puzzle) == 1:
+        if puzzle[0] - input_joltage <= 3:
+            return 1
+        else:
+            return 0
+    for i in range(min(3, len(puzzle))):
+        if puzzle[i] - input_joltage <= 3:
+            possibilities += count_possible_arrangements(puzzle[i+1:], puzzle[i])
+    return possibilities
+
+
+def task2(puzzle: List[int]) -> int:
+    puzzle = [0] + puzzle
+    possibilities = [0] * len(puzzle)
+    possibilities[0] = 1
+    for adapter in range(0, len(puzzle) - 1):
+        for next_adapter in range(adapter + 1, adapter + 4):
+            if next_adapter >= len(puzzle):
+                break
+            if puzzle[next_adapter] - puzzle[adapter] > 3:
+                break
+            possibilities[next_adapter] += possibilities[adapter]
+    return possibilities[len(puzzle) - 1]
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         input_file = sys.argv[1]
@@ -37,5 +65,7 @@ if __name__ == '__main__':
         puzzle_amend(puzzle_lines)
         task1_solution = task1(puzzle_lines)
         print("Task 1: {:d}".format(task1_solution))
+        task2_solution = task2(puzzle_lines)
+        print("Task 2: {:d}".format(task2_solution))
     else:
         print("Usage: {:s} puzzle file".format(sys.argv[0]))
